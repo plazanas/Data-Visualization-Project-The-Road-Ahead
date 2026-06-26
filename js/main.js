@@ -31,6 +31,8 @@ function hideTip(){ if(tipEl) tipEl.className="tip"; }
 const setTxt=(id,txt)=>{ const e=document.getElementById(id); if(e) e.textContent=txt; };
 const dotColor=s=> s>40?PAL.ev : s>15?"#5bb98a" : PAL.petrol;
 const dispCode=c=> c==="EL"?"GR":c;   // show Greece as the familiar "GR" (data key stays Eurostat "EL")
+const CODE3={BE:"BEL",BG:"BGR",CZ:"CZE",DK:"DNK",DE:"DEU",EE:"EST",IE:"IRL",EL:"GRC",ES:"ESP",FR:"FRA",HR:"HRV",IT:"ITA",CY:"CYP",LV:"LVA",LT:"LTU",LU:"LUX",HU:"HUN",MT:"MLT",NL:"NLD",AT:"AUT",PL:"POL",PT:"PRT",RO:"ROU",SI:"SVN",SK:"SVK",FI:"FIN",SE:"SWE",NO:"NOR"};
+const dispCode3=c=>CODE3[c]||c;   // 3-letter ISO for Act 6
 /* ── statistics (computed live so values can never drift) ─ */
 function pearson(xs,ys){
   const n=xs.length, mx=d3.mean(xs), my=d3.mean(ys);
@@ -353,7 +355,7 @@ function renderSlope(SH){
   rows.filter(d=>!top.has(d.code)).forEach(d=>drawLine(d,false));
   rows.filter(d=>top.has(d.code)).forEach(d=>drawLine(d,true));
   // right-side labels for highlighted, with simple vertical declutter
-  const labels=rows.filter(d=>top.has(d.code)).map(d=>({yy:y(d.b),txt:dispCode(d.code)+" "+Math.round(d.b)+"%"})).sort((p,q)=>p.yy-q.yy);
+  const labels=rows.filter(d=>top.has(d.code)).map(d=>({yy:y(d.b),txt:dispCode3(d.code)+" "+Math.round(d.b)+"%"})).sort((p,q)=>p.yy-q.yy);
   for(let i=1;i<labels.length;i++){ if(labels[i].yy-labels[i-1].yy<13) labels[i].yy=labels[i-1].yy+13; }
   labels.forEach(l=>g.append("text").attr("x",iW+8).attr("y",l.yy+3).attr("font-size","11px").attr("font-weight","700").attr("fill",PAL.ev).text(l.txt));
 }
@@ -375,7 +377,7 @@ function renderSparklines(SH){
     const last=pts[pts.length-1];
     const card=document.createElement("div"); card.className="spark-card";
     card.title=`${d.name}: ${Math.round(d.last)}% BEV in 2024 (from ${Math.round(d.series.find(v=>v!=null))}% in ${yrs[d.series.findIndex(v=>v!=null)]})`;
-    card.innerHTML=`<div class="sc-top"><span class="sc-code">${dispCode(d.code)}</span><span class="sc-val" style="color:${col}">${Math.round(d.last)}%</span></div>`+
+    card.innerHTML=`<div class="sc-top"><span class="sc-code">${dispCode3(d.code)}</span><span class="sc-val" style="color:${col}">${Math.round(d.last)}%</span></div>`+
       `<svg viewBox="0 0 ${W} ${H}"><path d="${path}" fill="none" stroke="${col}" stroke-width="1.6"/><circle cx="${last[0].toFixed(1)}" cy="${last[1].toFixed(1)}" r="2" fill="${col}"/></svg>`;
     wrap.appendChild(card);
   });
