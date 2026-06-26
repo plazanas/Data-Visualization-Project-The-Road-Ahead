@@ -137,7 +137,7 @@
         <div class="glue-head">
           <div class="secnum"><b>02</b> What actually decides it</div>
           <h2 class="glue-h">One chart, four <span class="em accent-text">suspects.</span></h2>
-          <p class="glue-lead">Same 28 countries, same vertical axis — EV share of new cars in 2024. Keep scrolling: the horizontal axis changes to test each suspect in turn, and the dots travel to their new places.</p>
+          <p class="glue-lead">EV share of new cars in 2024 across European countries. Keep scrolling and the horizontal axis changes to test different factors.</p>
         </div>
 
         <div class="glue-body">
@@ -145,27 +145,27 @@
             <div class="glue-step active" data-step="0">
               <div class="step-chip" id="chip-0">r —</div>
               <h3 class="step-h">First suspect: wealth</h3>
-              <p class="step-p">Richer countries do tend to adopt faster — the strongest single link we found (rank ρ ≈ <span id="rho-gdp">—</span>). But it's loose: Ireland and Luxembourg are rich, yet they lag.</p>
+              <p class="step-p">Richer countries do tend to adopt faster, the strongest single link we found (rank ρ ≈ <span id="rho-gdp">—</span>), but there are exceptions, Ireland and Luxembourg are rich, yet they lag.</p>
             </div>
             <div class="glue-step" data-step="1">
               <div class="step-chip" id="chip-1">r —</div>
               <h3 class="step-h">The intuition that fails: electricity price</h3>
-              <p class="step-p">Surely cheap power means more EVs? The dots refuse it (r ≈ <span id="r-elec-inline">—</span>). Hungary has Europe's cheapest power and a 7% share; Denmark pays far more and sits above 50%.</p>
+              <p class="step-p">Cheaper electricity does not mean more EVs, Hungary has Europe's cheapest power and a 7% share; Denmark pays far more and sits above 50%.</p>
             </div>
             <div class="glue-step" data-step="2">
               <div class="step-chip" id="chip-2">r —</div>
               <h3 class="step-h">The whole running-cost gap</h3>
-              <p class="step-p">Give cost every chance: the full petrol-minus-EV saving per 100 km. Better — but still weak (r ≈ <span id="r-gap-step">—</span>). Money matters; on its own it doesn't decide.</p>
+              <p class="step-p">Petrol and diesel cost savings compared to EV per 100 km are also weak correlations. Money matters, but on its own it doesn't decide.</p>
             </div>
             <div class="glue-step" data-step="3">
               <div class="step-chip" id="chip-3">r —</div>
               <h3 class="step-h">A policy lever you can measure: charging</h3>
-              <p class="step-p">Public charging points per 100k people track adoption better than anything else here (r ≈ <span id="r-charge-step">—</span>) — infrastructure that governments build out. Honest caveat: it's partly circular, since more EVs also pull in more chargers.</p>
+              <p class="step-p">Public charging point per 100k people track adoption better than anything else.</p>
             </div>
             <div class="glue-step" data-step="4">
               <div class="step-chip" id="chip-4">policy</div>
               <h3 class="step-h">The missing axis: policy</h3>
-              <p class="step-p">Split at the medians and two clusters appear that running cost can't separate: <span class="accent-text">policy-led adopters</span> (small saving, high share) and <span style="color:var(--petrol)">cost-rich but stalled</span> (big saving, low share). What sets them apart is <b>policy</b> — purchase subsidies, EV tax &amp; VAT breaks paired with high taxes on petrol/diesel cars (Norway), company-car tax rules (Netherlands), the charging-network rollout, and use perks like free tolls, parking and bus-lane access.</p>
+              <p class="step-p">Split at the medians and two clusters appear that cost can't separate, <span class="accent-text">policy-led adopters</span> (small saving, high share) and <span style="color:var(--petrol)">cost-rich but stalled</span> (big saving, low share). Purchase subsidies, EV tax and VAT breaks paired with high taxes on petrol/diesel cars (Norway) and company-car tax rules (Netherlands) are <b>all policies</b> that push for EV adaptation.                
             </div>
           </div>
 
@@ -194,7 +194,7 @@
   <div class="wrap">
     <div class="secnum reveal"><b>03</b> The payoff</div>
     <h2 class="h-sec reveal rd1">The real cost of driving <span class="em">100 km.</span></h2>
-    <p class="lead reveal rd2">Combine each country's electricity and fuel prices and you get the running cost — the figure that should drive decisions. Electric wins almost everywhere. Yet, as we'll see, that win alone still doesn't decide who actually switches.</p>
+    <p class="lead reveal rd2">Combine each country's electricity and fuel prices and you get the running cost, the figure that should drive decisions. Electric wins almost everywhere, yet, as we'll see, that win alone still doesn't decide who actually switches.</p>
     <div class="split reveal rd3">
       <div data-fallback>
         <div class="bar-legend">
@@ -208,7 +208,7 @@
         <div><div class="cost-fig accent-text" id="cost-ev-v">—</div><p class="side-body cf-cap" id="cost-ev-k">&nbsp;</p></div>
         <div><div class="cost-fig" style="color:var(--diesel)" id="cost-die-v">—</div><p class="side-body cf-cap" id="cost-die-k">&nbsp;</p></div>
         <div><div class="cost-fig" style="color:var(--petrol)" id="cost-pe-v">—</div><p class="side-body cf-cap" id="cost-pe-k">&nbsp;</p></div>
-        <p class="side-body" style="padding-top:1.2rem;border-top:2px solid var(--ink)">You'd expect the widest gaps to mean the fastest adoption. They don't, quite — this list is sorted by running-cost saving, and it is <em>not</em> the adoption order (the gap correlates only weakly with EV share, r ≈ <span id="r-gap-inline">—</span>). The running cost favours electric; something else decides who acts on it.</p>
+        <p class="side-body" style="padding-top:1.2rem;border-top:2px solid var(--ink)">The running cost favors electric, which should mean fastest adoption, but something else is the deciding factor. </p>
       </div>
     </div>
     <div class="source-note" style="margin-top:1.4rem">Electricity: Eurostat <a href="https://ec.europa.eu/eurostat/databrowser/view/nrg_pc_204/default/table?lang=en" target="_blank" rel="noopener">nrg_pc_204</a> · Petrol/diesel: <a href="https://energy.ec.europa.eu/data-and-analysis/weekly-oil-bulletin_en" target="_blank" rel="noopener">EU Weekly Oil Bulletin</a> · consumption: <a href="https://www.mdpi.com/2071-1050/16/17/7529" target="_blank" rel="noopener">MDPI 2024</a> / <a href="https://climate.ec.europa.eu/news-other-reads/news/first-commission-report-real-world-co2-emissions-cars-and-vans-using-data-board-fuel-consumption-2024-03-18_en" target="_blank" rel="noopener">EC OBFCM</a>.</div>
@@ -222,7 +222,7 @@
   <div class="wrap">
     <div class="secnum reveal"><b>04</b> Over time</div>
     <h2 class="h-sec reveal rd1">Electric stayed <span class="em">cheaper.</span></h2>
-    <p class="lead reveal rd2">Watch the current flow along the electric line — even through the 2022 energy crisis it stayed well below petrol and diesel across the EU. The gap narrowed, but it never closed.</p>
+    <p class="lead reveal rd2">Watch the current flow along the electric line, even through the 2022 energy crisis it stayed well below petrol and diesel across the EU. The gap narrowed, but it never closed.</p>
     <div class="card reveal rd3" data-fallback style="margin-top:3rem">
       <div class="card-title chart-title">EU average cost to drive 100 km, by powertrain (2007–2025)</div>
       <svg id="eu-trend" viewBox="0 0 900 380" style="width:100%" role="img" aria-label="Line chart of EU average cost to drive 100 km by powertrain (electric, diesel, petrol), 2007 to 2025; electric stays below petrol and diesel throughout."></svg>
@@ -238,7 +238,7 @@
   <div class="wrap" id="prices-intro">
     <div class="secnum reveal"><b>05</b> The raw prices</div>
     <h2 class="h-sec reveal rd1">Explore the prices <span class="em">yourself.</span></h2>
-    <p class="lead reveal rd2">The EU line above is an average. Here are the prices underneath it — petrol, diesel and electricity, country by country, from 2005 to today. Search and add countries to compare, switch the series, zoom into any period. <span style="color:var(--accent)">Scroll inside the chart to zoom; scroll outside it to move on.</span></p>
+    <p class="lead reveal rd2">The EU line above is an average, here are the prices that create it, petrol, diesel and electricity, country by country, from 2005 to today. Search and add countries to compare, switch the series, zoom into any period. <span style="color:var(--accent)">Scroll inside the chart to zoom; scroll outside it to move on.</span></p>
   </div>
   <div class="map-scroller prices-scroller">
     <div class="map-stage">
@@ -331,7 +331,7 @@
   <div class="wrap">
     <div class="secnum reveal"><b>06</b> The acceleration</div>
     <h2 class="h-sec reveal rd1">The leaders pulled <span class="em">away.</span></h2>
-    <p class="lead reveal rd2">Adoption isn't drifting up — for the front-runners it went vertical. Battery-electric share of new cars, every country, since 2013. Real Eurostat data.</p>
+    <p class="lead reveal rd2">Battery-electric share of new cars, every country, since 2013. Adoption isn't drifting up, for the front-runners it went vertical.</p>
 
     <div class="split reveal rd3" style="margin-top:2.6rem">
       <div class="card" data-fallback>
@@ -341,12 +341,12 @@
       </div>
       <div>
         <div class="side-statement">Five years, two different worlds.</div>
-        <p class="side-body">Denmark went from 2% to 51%, Norway from 41% to 88%, Malta from 4% to 38%. Meanwhile Poland, Croatia and Slovakia barely left the floor — the gap isn't closing, it's widening.</p>
+        <p class="side-body">Denmark went from 2% to 51%, Norway from 41% to 88%, Malta from 4% to 38%. Meanwhile Poland, Croatia and Slovakia barely left the floor, the gap isn't closing, it's widening.</p>
       </div>
     </div>
 
     <h3 class="step-h reveal" style="margin-top:3.5rem;color:var(--ink)">Every country's path, 2013–2024</h3>
-    <p class="side-body reveal" style="max-width:640px">Sorted by 2024 share. Each spark is one country's trajectory on a shared scale — scan for the hockey-sticks versus the flatlines.</p>
+    <p class="side-body reveal" style="max-width:640px">Sorted by 2024 share, each spark is one country's trajectory on a shared scale scan for the hockey-sticks versus the flatlines.</p>
     <div class="spark-grid reveal rd1" id="spark-grid" data-fallback style="margin-top:1.6rem"></div>
     <div class="source-note" style="margin-top:1.4rem">Source: Eurostat <a href="https://ec.europa.eu/eurostat/databrowser/view/road_eqr_carpda/default/table?lang=en" target="_blank" rel="noopener">road_eqr_carpda</a> (BEV ÷ total new registrations, 2013–2024).</div>
   </div>
@@ -360,7 +360,7 @@
     <div class="secnum reveal" style="justify-content:center"><b>07</b> Your country</div>
     <h2 class="h-sec reveal rd1" style="text-align:center;color:#fff">What would it cost <span class="em accent-text">you?</span></h2>
     <div class="picker-card reveal rd2" data-fallback>
-      <p class="side-body" style="margin-top:0">Pick your country to see the real cost gap — and whether going electric pays off where you live.</p>
+      <p class="side-body" style="margin-top:0">Pick your country to see the real cost gap and whether going electric pays off where you live.</p>
       <div class="picker-grid" id="picker-grid"></div>
       <div class="result" id="result">
         <div class="rc" id="r-country"></div>
@@ -396,7 +396,7 @@
       <div class="reveal">
         <div class="secnum"><b>Fun fact</b> One more thing for petrolheads</div>
         <div class="side-statement" style="color:#fff">Electric isn't just cheaper.<br>It's <span class="em accent-text">also waaaay faster.</span></div>
-        <p class="side-body">No gears, no turbo lag — an electric motor delivers full torque from a standstill. The needle sweeps 0→100 km/h the moment this comes into view, the same way an EV leaves the line.</p>
+        <p class="side-body">No gears, no turbo lag, an electric motor delivers full torque from a standstill. The needle sweeps 0→100 km/h the moment this comes into view, the same way an EV leaves the line.</p>
       </div>
       <div class="gauge-wrap reveal rd1" id="gauge-host">
         <svg viewBox="0 0 300 188" style="width:100%;max-width:380px;margin:0 auto" role="img" aria-label="A speedometer sweeping from 0 to 100 km per hour, illustrating instant electric-motor torque.">
