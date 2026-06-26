@@ -1,0 +1,38 @@
+{
+ "title": "The Road Ahead \u2014 Why Europe Can't Agree on Electric",
+ "built": "2026-06-24",
+ "cost_basis": "real_world",
+ "consumption": {
+  "ev": {
+   "certified": 19,
+   "real_world": 21,
+   "unit": "kWh/100km",
+   "source": "Pucher & Sandhu 2024, MDPI Sustainability 16(17):7529 (342 EU EV models)"
+  },
+  "petrol": {
+   "certified": 6.1,
+   "real_world": 7.5,
+   "unit": "L/100km",
+   "source": "EU new-car ~5.6 L (ODYSSEE/IEA) apportioned + real-world gap +23.7% (EC OBFCM COM(2024)122)"
+  },
+  "diesel": {
+   "certified": 5.3,
+   "real_world": 6.3,
+   "unit": "L/100km",
+   "source": "EU new-car (ODYSSEE/IEA) apportioned + real-world gap +18.1% (EC OBFCM COM(2024)122)"
+  }
+ },
+ "formula": "EUR/100km = energy price x consumption per 100km",
+ "fx_eur_nok": 10.97,
+ "sources": {
+  "electricity": "Eurostat nrg_pc_204 (band DC, all taxes incl.)",
+  "fuel_prices": "EU Weekly Oil Bulletin (per-country current; EU-level history)",
+  "norway_fuel": "SSB tbl 09654 / GlobalPetrolPrices Jun-2026, EUR/NOK 10.97 (ECB)",
+  "ev_adoption": "Eurostat road_eqr_carpda (BEV / total new registrations, 2024)",
+  "ev_adoption_timeseries": "Eurostat road_eqr_carpda (ELC / TOTAL new registrations, 2013-2024)",
+  "charging": "EAFO recharging points (AFIR, 2026) per 100k inhabitants (population: Eurostat 2024)",
+  "gdp": "Eurostat tec00114 (GDP per capita PPS, EU=100, 2025)",
+  "consumption_ev": "Pucher & Sandhu 2024, MDPI Sustainability 16(17):7529 (342 EU EV models)",
+  "consumption_fuel": "EC OBFCM real-world gap COM(2024)122 + ODYSSEE/IEA WLTP baseline"
+ }
+}

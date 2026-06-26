@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Road Ahead — Why Europe Can't Agree on Electric</title>
+<meta name="description" content="A data story on why electric-car adoption is so uneven across Europe — and why running cost, not wealth, is the driver.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Fraunces:ital,opsz,wght@0,9..144,600;0,9..144,700;1,9..144,500;1,9..144,600&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="assets/lightning.svg">
+<link rel="stylesheet" href="css/styles.css">
+<script src="https://unpkg.com/d3@7/dist/d3.min.js" defer></script>
+<script src="js/main.js" defer></script>
+<!-- Interactive choropleth map (George Chrysikopoulos) — uses D3 (above) -->
+<script src="js/map-data.js" defer></script>
+<script src="js/map.js" defer></script>
+<!-- Energy-price explorer (Chart.js + zoom/pan) -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-zoom/2.0.1/chartjs-plugin-zoom.min.js" defer></script>
+<script src="js/energy-data.js" defer></script>
+<script src="js/energy.js" defer></script>
+</head>
+<body id="page-dashboard">
+
+<div class="tip" id="tip" role="status" aria-live="polite"></div>
+
+<!-- NAV -->
+<nav class="nav">
+  <a class="nav-brand" href="index.html">The Road Ahead<span class="dot">.</span></a>
+  <div class="nav-links">
+    <a href="#act1" data-sec="act1">The Map</a>
+    <a href="#decides" data-sec="decides">What decides it</a>
+    <a href="#act3" data-sec="act3">The Cost</a>
+    <a href="#act4" data-sec="act4">Over Time</a>
+    <a href="#prices" data-sec="prices">Prices</a>
+    <a href="#accel" data-sec="accel">Acceleration</a>
+    <a href="#payoff" data-sec="payoff">Your Country</a>
+    <a href="#takeoff" data-sec="takeoff">0–100</a>
+    <a href="video.html">Watch</a>
+    <a href="credits.html">Credits</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<header class="hero section light" data-screen-label="Hero">
+  <div class="wrap">
+    <div class="secnum reveal">M126 · Data Visualization</div>
+    <h1 class="display reveal rd1">Europe can't<br>agree on<br><span class="em accent-text">electric.</span></h1>
+    <p class="lead reveal rd2">In Norway, nearly nine in ten new cars are electric. In Croatia, only a handful in a hundred, despite being on the same continent, same carmakers, same technology. We went looking for the one number that explains the gap and it isn't the one everyone names.</p>
+    <div class="hero-band reveal rd3">
+      <div class="hbig hi"><div class="num" id="hero-hi-num">0%</div><div class="cap" id="hero-hi-cap">&nbsp;</div></div>
+      <div class="hbig lo"><div class="num" id="hero-lo-num">0%</div><div class="cap" id="hero-lo-cap">&nbsp;</div></div>
+    </div>
+    <a class="cue reveal rd3" href="#act1" aria-label="Scroll to explore">
+      <span class="cue-text">Scroll to explore</span>
+      <span class="cue-mouse"><span class="cue-wheel"></span></span>
+    </a>
+  </div>
+</header>
+
+<div class="power-divider"></div>
+
+<!-- ACT 1 — MAP (colleague's component mounts here) -->
+<section id="act1" class="section paper" data-screen-label="Map">
+  <div class="wrap map-intro fade-intro" id="map-intro">
+    <div class="secnum reveal"><b>01</b> The evidence</div>
+    <h2 class="h-sec reveal rd1">The map doesn't <span class="em">lie.</span></h2>
+    <p class="lead reveal rd2">New-car registrations across Europe, 2013–2024. In this interactive map, you can drag the <b>year</b>, <b>hit play </b>, switch the <b>powertrain </b>, toggle <b>per-capita GDP</b>, and <b>click any country for its full trend.</b></p>
+  </div>
+  <div class="map-scroller">
+    <div class="map-stage">
+      <div class="wrap-wide">
+        <div class="viz-shell">
+          <div class="vs-bar">
+        <span class="vs-title">European car registrations</span>
+        <span class="vs-src">Eurostat <a href="https://ec.europa.eu/eurostat/databrowser/view/road_eqr_carpda/default/table?lang=en" target="_blank" rel="noopener">road_eqr_carpda</a> · <a href="https://ec.europa.eu/eurostat/databrowser/view/road_eqs_carhab/default/table?lang=en" target="_blank" rel="noopener">road_eqs_carhab</a> · <a href="https://ec.europa.eu/eurostat/databrowser/view/demo_pjan/default/table?lang=en" target="_blank" rel="noopener">demo_pjan</a><br>Geometry © Eurostat <a href="https://ec.europa.eu/eurostat/web/gisco" target="_blank" rel="noopener">GISCO</a></span>
+      </div>
+      <div id="map-app">
+        <div class="controls">
+          <div class="control-group">
+            <label>Engine / fuel type</label>
+            <select id="engine-select"></select>
+          </div>
+          <div class="control-group">
+            <label>Year</label>
+            <div class="year-row">
+              <button id="play-btn" title="Play / pause" aria-label="Play or pause the year animation">
+                <svg id="play-icon" viewBox="0 0 10 12"><polygon points="0,0 10,6 0,12"/></svg>
+              </button>
+              <input type="range" id="year-slider" min="0" step="1" aria-label="Year">
+              <span id="year-display"></span>
+              <label class="toggle-wrap" title="Colour the map by registrations per thousand inhabitants">
+                <span class="toggle">
+                  <input type="checkbox" id="normalize-toggle">
+                  <div class="toggle-track"></div>
+                  <div class="toggle-thumb"></div>
+                </span>
+                <span class="toggle-label" id="norm-label">Per thousand inhabitants</span>
+              </label>
+            </div>
+          </div>
+        </div>
+        <div class="map-main">
+          <div id="map-wrap"><svg id="map-svg"></svg></div>
+          <div class="map-sidebar">
+            <div class="sidebar-top">
+              <h2 id="legend-title">Legend</h2>
+              <div class="legend-bar"></div>
+              <div class="legend-labels"><span id="leg-min">0</span><span id="leg-max">&ndash;</span></div>
+              <div class="no-data-row">
+                <div class="no-data-swatch"></div>
+                <span class="no-data-label">No data available</span>
+              </div>
+            </div>
+            <div class="info-panel" id="info-panel">
+              <div class="placeholder-msg">Click any country to see its full statistics and trend chart.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="power-divider"></div>
+
+<!-- DECIDES — glued transforming scatter (one compact pinned frame) -->
+<section id="decides" class="section ink" data-screen-label="What decides it">
+  <div class="glue-scroller" id="glue-scroller">
+    <div class="glue-stage">
+      <div class="wrap">
+
+        <div class="glue-head">
+          <div class="secnum"><b>02</b> What actually decides it</div>
+          <h2 class="glue-h">One chart, four <span class="em accent-text">suspects.</span></h2>
+          <p class="glue-lead">Same 28 countries, same vertical axis — EV share of new cars in 2024. Keep scrolling: the horizontal axis changes to test each suspect in turn, and the dots travel to their new places.</p>
+        </div>
+
+        <div class="glue-body">
+          <div class="glue-context">
+            <div class="glue-step active" data-step="0">
+              <div class="step-chip" id="chip-0">r —</div>
+              <h3 class="step-h">First suspect: wealth</h3>
+              <p class="step-p">Richer countries do tend to adopt faster — the strongest single link we found (rank ρ ≈ <span id="rho-gdp">—</span>). But it's loose: Ireland and Luxembourg are rich, yet they lag.</p>
+            </div>
+            <div class="glue-step" data-step="1">
+              <div class="step-chip" id="chip-1">r —</div>
+              <h3 class="step-h">The intuition that fails: electricity price</h3>
+              <p class="step-p">Surely cheap power means more EVs? The dots refuse it (r ≈ <span id="r-elec-inline">—</span>). Hungary has Europe's cheapest power and a 7% share; Denmark pays far more and sits above 50%.</p>
+            </div>
+            <div class="glue-step" data-step="2">
+              <div class="step-chip" id="chip-2">r —</div>
+              <h3 class="step-h">The whole running-cost gap</h3>
+              <p class="step-p">Give cost every chance: the full petrol-minus-EV saving per 100 km. Better — but still weak (r ≈ <span id="r-gap-step">—</span>). Money matters; on its own it doesn't decide.</p>
+            </div>
+            <div class="glue-step" data-step="3">
+              <div class="step-chip" id="chip-3">r —</div>
+              <h3 class="step-h">A policy lever you can measure: charging</h3>
+              <p class="step-p">Public charging points per 100k people track adoption better than anything else here (r ≈ <span id="r-charge-step">—</span>) — infrastructure that governments build out. Honest caveat: it's partly circular, since more EVs also pull in more chargers.</p>
+            </div>
+            <div class="glue-step" data-step="4">
+              <div class="step-chip" id="chip-4">policy</div>
+              <h3 class="step-h">The missing axis: policy</h3>
+              <p class="step-p">Split at the medians and two clusters appear that running cost can't separate: <span class="accent-text">policy-led adopters</span> (small saving, high share) and <span style="color:var(--petrol)">cost-rich but stalled</span> (big saving, low share). What sets them apart is <b>policy</b> — purchase subsidies, EV tax &amp; VAT breaks paired with high taxes on petrol/diesel cars (Norway), company-car tax rules (Netherlands), the charging-network rollout, and use perks like free tolls, parking and bus-lane access.</p>
+            </div>
+          </div>
+
+          <div class="glue-chart card" data-fallback>
+            <div class="card-title" id="glued-title">EV share vs GDP per capita</div>
+            <div class="fossil-toggle" id="fossil-toggle" hidden>
+              <button class="ft-btn active" data-fossil="petrol">vs Petrol</button>
+              <button class="ft-btn" data-fossil="diesel">vs Diesel</button>
+            </div>
+            <svg id="glued-scatter" viewBox="0 0 560 430" style="width:100%" role="img" aria-label="Scatter plot of EV share of new cars (2024) against, in turn, GDP per capita, electricity price, running-cost saving, and charging points per capita, for 28 European countries."></svg>
+            <div class="viz-hint">Hover any point. Vertical axis is always EV share (2024).</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="wrap"><div class="source-note">Sources: Eurostat <a href="https://ec.europa.eu/eurostat/databrowser/view/tec00114/default/table?lang=en" target="_blank" rel="noopener">tec00114</a> (GDP) · <a href="https://ec.europa.eu/eurostat/databrowser/view/nrg_pc_204/default/table?lang=en" target="_blank" rel="noopener">nrg_pc_204</a> (electricity) · <a href="https://ec.europa.eu/eurostat/databrowser/view/road_eqr_carpda/default/table?lang=en" target="_blank" rel="noopener">road_eqr_carpda</a> (EV share) · <a href="https://energy.ec.europa.eu/data-and-analysis/weekly-oil-bulletin_en" target="_blank" rel="noopener">EU Weekly Oil Bulletin</a> (petrol/diesel prices) · <a href="https://alternative-fuels-observatory.ec.europa.eu/transport-mode/road" target="_blank" rel="noopener">EAFO</a> (charging points per capita).</div></div>
+</section>
+
+<div class="power-divider"></div>
+
+<!-- ACT 3 — THE COST (bars, light/paper) -->
+<section id="act3" class="section paper" data-screen-label="The Cost">
+  <div class="wrap">
+    <div class="secnum reveal"><b>03</b> The payoff</div>
+    <h2 class="h-sec reveal rd1">The real cost of driving <span class="em">100 km.</span></h2>
+    <p class="lead reveal rd2">Combine each country's electricity and fuel prices and you get the running cost — the figure that should drive decisions. Electric wins almost everywhere. Yet, as we'll see, that win alone still doesn't decide who actually switches.</p>
+    <div class="split reveal rd3">
+      <div data-fallback>
+        <div class="bar-legend">
+          <div class="bl"><span class="sw" style="background:var(--accent)"></span> EV (electricity)</div>
+          <div class="bl"><span class="sw" style="background:var(--diesel)"></span> Diesel</div>
+          <div class="bl"><span class="sw" style="background:var(--petrol)"></span> Petrol</div>
+        </div>
+        <div class="bars" id="cost-bars"></div>
+      </div>
+      <div class="cost-extremes">
+        <div><div class="cost-fig accent-text" id="cost-ev-v">—</div><p class="side-body cf-cap" id="cost-ev-k">&nbsp;</p></div>
+        <div><div class="cost-fig" style="color:var(--diesel)" id="cost-die-v">—</div><p class="side-body cf-cap" id="cost-die-k">&nbsp;</p></div>
+        <div><div class="cost-fig" style="color:var(--petrol)" id="cost-pe-v">—</div><p class="side-body cf-cap" id="cost-pe-k">&nbsp;</p></div>
+        <p class="side-body" style="padding-top:1.2rem;border-top:2px solid var(--ink)">You'd expect the widest gaps to mean the fastest adoption. They don't, quite — this list is sorted by running-cost saving, and it is <em>not</em> the adoption order (the gap correlates only weakly with EV share, r ≈ <span id="r-gap-inline">—</span>). The running cost favours electric; something else decides who acts on it.</p>
+      </div>
+    </div>
+    <div class="source-note" style="margin-top:1.4rem">Electricity: Eurostat <a href="https://ec.europa.eu/eurostat/databrowser/view/nrg_pc_204/default/table?lang=en" target="_blank" rel="noopener">nrg_pc_204</a> · Petrol/diesel: <a href="https://energy.ec.europa.eu/data-and-analysis/weekly-oil-bulletin_en" target="_blank" rel="noopener">EU Weekly Oil Bulletin</a> · consumption: <a href="https://www.mdpi.com/2071-1050/16/17/7529" target="_blank" rel="noopener">MDPI 2024</a> / <a href="https://climate.ec.europa.eu/news-other-reads/news/first-commission-report-real-world-co2-emissions-cars-and-vans-using-data-board-fuel-consumption-2024-03-18_en" target="_blank" rel="noopener">EC OBFCM</a>.</div>
+  </div>
+</section>
+
+<div class="power-divider"></div>
+
+<!-- ACT 4 — OVER TIME (EU trend, dark, flowing current) -->
+<section id="act4" class="section ink" data-screen-label="Over Time">
+  <div class="wrap">
+    <div class="secnum reveal"><b>04</b> Over time</div>
+    <h2 class="h-sec reveal rd1">Electric stayed <span class="em">cheaper.</span></h2>
+    <p class="lead reveal rd2">Watch the current flow along the electric line — even through the 2022 energy crisis it stayed well below petrol and diesel across the EU. The gap narrowed, but it never closed.</p>
+    <div class="card reveal rd3" data-fallback style="margin-top:3rem">
+      <div class="card-title chart-title">EU average cost to drive 100 km, by powertrain (2007–2025)</div>
+      <svg id="eu-trend" viewBox="0 0 900 380" style="width:100%" role="img" aria-label="Line chart of EU average cost to drive 100 km by powertrain (electric, diesel, petrol), 2007 to 2025; electric stays below petrol and diesel throughout."></svg>
+    </div>
+    <div class="source-note" style="margin-top:1.4rem">Electricity: Eurostat <a href="https://ec.europa.eu/eurostat/databrowser/view/nrg_pc_204/default/table?lang=en" target="_blank" rel="noopener">nrg_pc_204</a> · Petrol/diesel: <a href="https://energy.ec.europa.eu/data-and-analysis/weekly-oil-bulletin_en" target="_blank" rel="noopener">EU Weekly Oil Bulletin</a> · cost = price × real-world consumption.</div>
+  </div>
+</section>
+
+<div class="power-divider"></div>
+
+<!-- PRICES — ENERGY EXPLORER (interactive, dark console on paper) -->
+<section id="prices" class="section paper" data-screen-label="Prices">
+  <div class="wrap" id="prices-intro">
+    <div class="secnum reveal"><b>05</b> The raw prices</div>
+    <h2 class="h-sec reveal rd1">Explore the prices <span class="em">yourself.</span></h2>
+    <p class="lead reveal rd2">The EU line above is an average. Here are the prices underneath it — petrol, diesel and electricity, country by country, from 2005 to today. Search and add countries to compare, switch the series, zoom into any period. <span style="color:var(--accent)">Scroll inside the chart to zoom; scroll outside it to move on.</span></p>
+  </div>
+  <div class="map-scroller prices-scroller">
+    <div class="map-stage">
+      <div class="wrap-wide">
+        <div class="viz-shell">
+      <div class="vs-bar">
+        <span class="vs-title">EU energy prices · 2005–2026</span>
+        <span class="vs-src"><a href="https://energy.ec.europa.eu/data-and-analysis/weekly-oil-bulletin_en" target="_blank" rel="noopener">EC Weekly Oil Bulletin</a> (petrol/diesel, incl. taxes)<br>Eurostat <a href="https://ec.europa.eu/eurostat/databrowser/view/nrg_pc_204/default/table?lang=en" target="_blank" rel="noopener">household electricity prices</a> (incl. taxes)</span>
+      </div>
+      <div id="energy-app">
+        <div class="stats-row">
+          <div class="stat-card">
+            <div class="stat-label">Petrol (EU latest)</div>
+            <div class="stat-value" id="stat-petrol">—</div>
+            <div class="stat-change" id="stat-petrol-chg">vs. year ago</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Diesel (EU latest)</div>
+            <div class="stat-value" id="stat-diesel">—</div>
+            <div class="stat-change" id="stat-diesel-chg">vs. year ago</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Electricity (EU27 latest)</div>
+            <div class="stat-value" id="stat-elec">—</div>
+            <div class="stat-change" id="stat-elec-chg">per kWh, incl. taxes</div>
+          </div>
+        </div>
+        <div class="picker-bar">
+          <div class="picker-col">
+            <label>Add countries to compare</label>
+            <div class="search-wrap" id="searchWrap">
+              <span class="search-icon">🔍</span>
+              <input type="text" id="countrySearch" placeholder="Search or click to browse…" oninput="filterCountries(this.value)" autocomplete="off">
+              <div class="country-list-wrap"><div id="countryList"></div></div>
+            </div>
+          </div>
+          <div class="picker-col">
+            <label>Selected <span id="selCount" style="color:var(--accent)">0</span> countries</label>
+            <div class="tags-wrap" id="tagsWrap"></div>
+            <div style="display:flex;gap:.5rem;align-items:center;margin-top:.25rem;flex-wrap:wrap">
+              <button class="btn-select-all" onclick="selectAll()">Select all</button>
+              <button class="btn-clear-all" onclick="clearAll()">Clear all</button>
+              <span style="font-size:.68rem;color:var(--muted)">Oil view:</span>
+              <div class="view-toggle">
+                <button class="view-btn active" id="btnWeekly" onclick="setOilView('weekly')">Weekly (EU only)</button>
+                <button class="view-btn" id="btnAnnual" onclick="setOilView('annual')">Annual avg</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="charts-grid">
+          <div class="chart-panel">
+            <div class="chart-header">
+              <div>
+                <div class="chart-title">Petrol, Diesel &amp; Electricity Prices</div>
+                <div class="chart-subtitle" id="oilSubtitle">Fuel €/1000 L (left) · Electricity €/kWh (right) · incl. taxes</div>
+                <div class="zoom-hint">scroll to zoom · drag to pan</div>
+              </div>
+              <div style="display:flex;gap:.75rem;align-items:center;flex-wrap:wrap">
+                <button class="btn-reset-zoom" id="resetOil" onclick="resetZoom('oil')">↺ Reset zoom</button>
+                <div class="range-btns" id="series-btns">
+                  <button class="range-btn active" data-series="all" onclick="setSeries('all')">All</button>
+                  <button class="range-btn" data-series="petrol" onclick="setSeries('petrol')">Petrol</button>
+                  <button class="range-btn" data-series="diesel" onclick="setSeries('diesel')">Diesel</button>
+                  <button class="range-btn" data-series="elec" onclick="setSeries('elec')">Electricity</button>
+                </div>
+                <div class="range-btns" id="oil-range-btns">
+                  <button class="range-btn" data-range="3" onclick="setOilRange(3)">3Y</button>
+                  <button class="range-btn" data-range="5" onclick="setOilRange(5)">5Y</button>
+                  <button class="range-btn" data-range="10" onclick="setOilRange(10)">10Y</button>
+                  <button class="range-btn active" data-range="all" onclick="setOilRange('all')">All</button>
+                </div>
+              </div>
+            </div>
+            <div class="chart-wrap"><canvas id="oilChart"></canvas></div>
+          </div>
+        </div>
+      </div>
+        </div>
+        <div class="source-note">Fuel: consumer prices incl. all taxes, €/1000 L (<a href="https://energy.ec.europa.eu/data-and-analysis/weekly-oil-bulletin_en" target="_blank" rel="noopener">EU Weekly Oil Bulletin</a> — EU weekly, or per-country annual averages). Electricity: households, incl. taxes, €/kWh per semester — Eurostat <a href="https://ec.europa.eu/eurostat/databrowser/view/nrg_pc_204/default/table?lang=en" target="_blank" rel="noopener">nrg_pc_204</a> (right axis). Per-country fuel is shown as annual averages; weekly detail is EU-only.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="power-divider"></div>
+
+<!-- ACCELERATION — adoption over time (slope chart + sparklines) -->
+<section id="accel" class="section light" data-screen-label="Acceleration">
+  <div class="wrap">
+    <div class="secnum reveal"><b>06</b> The acceleration</div>
+    <h2 class="h-sec reveal rd1">The leaders pulled <span class="em">away.</span></h2>
+    <p class="lead reveal rd2">Adoption isn't drifting up — for the front-runners it went vertical. Battery-electric share of new cars, every country, since 2013. Real Eurostat data.</p>
+
+    <div class="split reveal rd3" style="margin-top:2.6rem">
+      <div class="card" data-fallback>
+        <div class="card-title chart-title">BEV share of new cars: 2019 → 2024</div>
+        <svg id="slope-chart" viewBox="0 0 480 440" style="width:100%" role="img" aria-label="Slope chart of battery-electric share of new cars from 2019 to 2024 for each country; the fastest risers (Norway, Denmark, Malta, Sweden, Netherlands) climb steeply while laggards stay flat."></svg>
+        <div class="viz-hint">Hover any line. Highlighted = the five fastest risers by 2024 share.</div>
+      </div>
+      <div>
+        <div class="side-statement">Five years, two different worlds.</div>
+        <p class="side-body">Denmark went from 2% to 51%, Norway from 41% to 88%, Malta from 4% to 38%. Meanwhile Poland, Croatia and Slovakia barely left the floor — the gap isn't closing, it's widening.</p>
+      </div>
+    </div>
+
+    <h3 class="step-h reveal" style="margin-top:3.5rem;color:var(--ink)">Every country's path, 2013–2024</h3>
+    <p class="side-body reveal" style="max-width:640px">Sorted by 2024 share. Each spark is one country's trajectory on a shared scale — scan for the hockey-sticks versus the flatlines.</p>
+    <div class="spark-grid reveal rd1" id="spark-grid" data-fallback style="margin-top:1.6rem"></div>
+    <div class="source-note" style="margin-top:1.4rem">Source: Eurostat <a href="https://ec.europa.eu/eurostat/databrowser/view/road_eqr_carpda/default/table?lang=en" target="_blank" rel="noopener">road_eqr_carpda</a> (BEV ÷ total new registrations, 2013–2024).</div>
+  </div>
+</section>
+
+<div class="power-divider slow"></div>
+
+<!-- PAYOFF — YOUR COUNTRY (dark) -->
+<section id="payoff" class="section ink2" data-screen-label="Your Country">
+  <div class="wrap">
+    <div class="secnum reveal" style="justify-content:center"><b>07</b> Your country</div>
+    <h2 class="h-sec reveal rd1" style="text-align:center;color:#fff">What would it cost <span class="em accent-text">you?</span></h2>
+    <div class="picker-card reveal rd2" data-fallback>
+      <p class="side-body" style="margin-top:0">Pick your country to see the real cost gap — and whether going electric pays off where you live.</p>
+      <div class="picker-grid" id="picker-grid"></div>
+      <div class="result" id="result">
+        <div class="rc" id="r-country"></div>
+        <div class="rnums">
+          <div class="rnum"><div class="big ev" id="r-ev"></div><div class="lbl">EV · 100 km</div></div>
+          <div class="rvs">vs</div>
+          <div class="rnum"><div class="big petrol" id="r-petrol"></div><div class="lbl">Petrol · 100 km</div></div>
+          <div class="rnum"><div class="big save" id="r-save"></div><div class="lbl">saved vs petrol</div></div>
+        </div>
+        <div class="rnums rnums-2">
+          <div class="rnum"><div class="big ev" id="r-ev2"></div><div class="lbl">EV · 100 km</div></div>
+          <div class="rvs">vs</div>
+          <div class="rnum"><div class="big" style="color:var(--diesel)" id="r-diesel"></div><div class="lbl">Diesel · 100 km</div></div>
+          <div class="rnum"><div class="big save" id="r-save-die"></div><div class="lbl">saved vs diesel</div></div>
+        </div>
+        <div class="rverdict" id="r-verdict"></div>
+        <div class="ctrend">
+          <h4 id="ct-title">Electric running cost over time</h4>
+          <svg id="ctrend" viewBox="0 0 760 280" style="width:100%" role="img" aria-label="Line chart of the selected country's EV running cost over time versus the EU-average petrol and diesel benchmark."></svg>
+          <div class="source-note">Your country's EV cost (electricity × 21 kWh/100 km, Eurostat <a href="https://ec.europa.eu/eurostat/databrowser/view/nrg_pc_204/default/table?lang=en" target="_blank" rel="noopener">nrg_pc_204</a>) vs. the EU-average petrol &amp; diesel benchmark (per-country fuel history isn't published).</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="power-divider slow"></div>
+
+<!-- TAKEOFF — closing flourish: 0→100 motion moment -->
+<section id="takeoff" class="section ink" data-screen-label="Takeoff (0-100)">
+  <div class="wrap">
+    <div class="split">
+      <div class="reveal">
+        <div class="secnum"><b>Fun fact</b> One more thing for petrolheads</div>
+        <div class="side-statement" style="color:#fff">Electric isn't just cheaper.<br>It's <span class="em accent-text">also waaaay faster.</span></div>
+        <p class="side-body">No gears, no turbo lag — an electric motor delivers full torque from a standstill. The needle sweeps 0→100 km/h the moment this comes into view, the same way an EV leaves the line.</p>
+      </div>
+      <div class="gauge-wrap reveal rd1" id="gauge-host">
+        <svg viewBox="0 0 300 188" style="width:100%;max-width:380px;margin:0 auto" role="img" aria-label="A speedometer sweeping from 0 to 100 km per hour, illustrating instant electric-motor torque.">
+          <defs><linearGradient id="gg" x1="0" x2="1"><stop offset="0" stop-color="#00c2a0"/><stop offset="1" stop-color="#5cffe6"/></linearGradient></defs>
+          <path d="M30 150 A120 120 0 0 1 270 150" fill="none" stroke="rgba(255,255,255,.12)" stroke-width="14" stroke-linecap="round"/>
+          <path id="gauge-val" d="M30 150 A120 120 0 0 1 270 150" fill="none" stroke="url(#gg)" stroke-width="14" stroke-linecap="round" pathLength="100" stroke-dasharray="100" stroke-dashoffset="100" style="filter:drop-shadow(0 0 8px rgba(0,194,160,.6))"/>
+          <text x="30" y="169" text-anchor="middle" font-size="12" font-weight="600" fill="#7a7a82">0</text>
+          <text x="150" y="18" text-anchor="middle" font-size="12" font-weight="600" fill="#7a7a82">50</text>
+          <text x="270" y="169" text-anchor="middle" font-size="12" font-weight="600" fill="#7a7a82">100</text>
+          <line id="needle" x1="150" y1="150" x2="30" y2="150" stroke="#fff" stroke-width="3" stroke-linecap="round"/>
+          <circle cx="150" cy="150" r="7" fill="#fff"/>
+        </svg>
+        <div class="gauge-num" id="gauge-num">0</div>
+        <div class="gauge-unit">km/h</div>
+        <div class="gauge-fact">2.1 seconds</div>
+        <div class="gauge-sub">Tesla Model S Plaid</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <p class="meta" id="methods-note" style="max-width:1180px;margin:0 auto 1.6rem;padding-bottom:1.4rem;border-bottom:1px solid rgba(255,255,255,.12);line-height:1.7">Methods — correlations are Pearson r against each country's 2024 BEV share (n = 28, EU27 + Norway), computed live from the data at page load.</p>
+  <div class="footer-in">
+    <div>
+      <b>The Road Ahead</b>
+      <div class="meta">M126 · Data Visualization — Chrysikopoulos · Giannis · Lazanas</div>
+    </div>
+    <div class="links">
+      <a href="video.html">Watch</a>
+      <a href="credits.html">Credits &amp; sources</a>
+    </div>
+  </div>
+</footer>
+
+<!-- MOTION 3 : scroll-linked EV charge rail -->
+<div class="road" aria-hidden="true">
+  <div class="surface"></div>
+  <div class="charge" id="charge"></div>
+  <img class="car" id="car" src="assets/car.svg" alt="">
+
+</div>
+
+</body>
+</html>

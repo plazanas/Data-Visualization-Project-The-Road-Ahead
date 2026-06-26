@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Credits — The Road Ahead</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Fraunces:ital,opsz,wght@0,9..144,600;1,9..144,500;1,9..144,600&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="assets/lightning.svg">
+<link rel="stylesheet" href="css/styles.css">
+<script src="js/main.js" defer></script>
+</head>
+<body id="page-credits">
+
+<nav class="nav">
+  <a class="nav-brand" href="index.html">The Road Ahead<span class="dot">.</span></a>
+  <div class="nav-links">
+    <a href="index.html">Story</a>
+    <a href="video.html">Watch</a>
+    <a href="credits.html" class="active">Credits</a>
+  </div>
+</nav>
+
+<section class="section ink" style="padding-top:8rem;min-height:100vh">
+  <div class="wrap">
+    <div class="secnum reveal"><svg width="30" height="30" viewBox="0 0 24 24" style="vertical-align:middle" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="var(--accent)"/><path d="M7 12.4l3.2 3.2L17 8.8" fill="none" stroke="#04130f" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg> Credits</div>
+    <h1 class="h-sec reveal rd1" style="color:#fff">The people &amp; the <span class="em">sources.</span></h1>
+    <p class="lead reveal rd2">M126 · Data Visualization — National and Kapodistrian University of Athens. Supervised by Maria Roussou.</p>
+
+    <div class="team-grid reveal rd3">
+      <div class="member">
+        <div class="nm">Panagiotis Giannis</div>
+        <div class="ro">Interactive map &amp; narrative charts &amp; geospatial data</div>
+      </div>
+      <div class="member">
+        <div class="nm">Panagiotis Lazanas</div>
+        <div class="ro">Visualization design &amp; narrative charts&amp; front-end</div>
+      </div>
+      <div class="member">
+        <div class="nm">George Chrysikopoulos</div>
+        <div class="ro">Data pipeline &amp; narrative charts &amp; back-end</div>
+      </div>
+    </div>
+
+    <div class="src-cols reveal">
+      <div>
+        <h5>Data sources</h5>
+        <ul>
+          <li>Eurostat — <a href="https://ec.europa.eu/eurostat/databrowser/view/road_eqr_carpda/default/table?lang=en" target="_blank" rel="noopener">road_eqr_carpda</a> (EV registrations)</li>
+          <li>Eurostat — <a href="https://ec.europa.eu/eurostat/databrowser/view/nrg_pc_204/default/table?lang=en" target="_blank" rel="noopener">nrg_pc_204</a> (electricity prices)</li>
+          <li>Eurostat — <a href="https://ec.europa.eu/eurostat/databrowser/view/tec00114/default/table?lang=en" target="_blank" rel="noopener">tec00114</a> (GDP per capita, PPS)</li>
+          <li>Eurostat — <a href="https://ec.europa.eu/eurostat/databrowser/view/road_eqs_carhab/default/table?lang=en" target="_blank" rel="noopener">road_eqs_carhab</a> (cars in use) · <a href="https://ec.europa.eu/eurostat/databrowser/view/demo_pjan/default/table?lang=en" target="_blank" rel="noopener">demo_pjan</a> (population)</li>
+          <li>EU <a href="https://energy.ec.europa.eu/data-and-analysis/weekly-oil-bulletin_en" target="_blank" rel="noopener">Weekly Oil Bulletin</a> (petrol/diesel)</li>
+          <li><a href="https://alternative-fuels-observatory.ec.europa.eu/transport-mode/road" target="_blank" rel="noopener">EAFO</a> — recharging points (charging per capita)</li>
+          <li><a href="https://www.ssb.no/en/statbank/table/09654" target="_blank" rel="noopener">SSB table 09654</a> + ECB FX (Norway fuel)</li>
+        </ul>
+      </div>
+      <div>
+        <h5>Methodology &amp; acknowledgments</h5>
+        <ul>
+          <li>EV consumption — <a href="https://www.mdpi.com/2071-1050/16/17/7529" target="_blank" rel="noopener">Pucher &amp; Sandhu 2024, MDPI Sustainability</a></li>
+          <li>Real-world fuel gap — EC OBFCM <a href="https://climate.ec.europa.eu/news-other-reads/news/first-commission-report-real-world-co2-emissions-cars-and-vans-using-data-board-fuel-consumption-2024-03-18_en" target="_blank" rel="noopener">COM(2024)122</a></li>
+          <li>New-car baseline — <a href="https://www.iea.org/articles/fuel-economy-in-the-european-union" target="_blank" rel="noopener">ODYSSEE-MURE / IEA</a></li>
+          <li>Built with <a href="https://d3js.org/" target="_blank" rel="noopener">D3.js v7</a>; map geometry © Eurostat <a href="https://ec.europa.eu/eurostat/web/gisco" target="_blank" rel="noopener">GISCO</a></li>
+          <li>Cost model: € / 100 km = energy price × real-world consumption</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="footer-in">
+    <div><b>The Road Ahead</b><div class="meta">M126 · Data Visualization — Chrysikopoulos · Giannis · Lazanas</div></div>
+    <div class="links"><a href="index.html">Story</a><a href="video.html">Watch</a></div>
+  </div>
+</footer>
+
+</body>
+</html>

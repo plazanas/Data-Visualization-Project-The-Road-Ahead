@@ -1,0 +1,175 @@
+{
+ "rows": [
+  {
+   "year": 2007,
+   "elec_eur_kwh": 0.1682,
+   "petrol_eur_l": 1.2359,
+   "diesel_eur_l": 1.0798,
+   "ev_per100": 3.53,
+   "petrol_per100": 9.27,
+   "diesel_per100": 6.8
+  },
+  {
+   "year": 2008,
+   "elec_eur_kwh": 0.164,
+   "petrol_eur_l": 1.3259,
+   "diesel_eur_l": 1.2828,
+   "ev_per100": 3.44,
+   "petrol_per100": 9.94,
+   "diesel_per100": 8.08
+  },
+  {
+   "year": 2009,
+   "elec_eur_kwh": 0.1673,
+   "petrol_eur_l": 1.1552,
+   "diesel_eur_l": 1.0085,
+   "ev_per100": 3.51,
+   "petrol_per100": 8.66,
+   "diesel_per100": 6.35
+  },
+  {
+   "year": 2010,
+   "elec_eur_kwh": 0.1751,
+   "petrol_eur_l": 1.331,
+   "diesel_eur_l": 1.1695,
+   "ev_per100": 3.68,
+   "petrol_per100": 9.98,
+   "diesel_per100": 7.37
+  },
+  {
+   "year": 2011,
+   "elec_eur_kwh": 0.1872,
+   "petrol_eur_l": 1.4929,
+   "diesel_eur_l": 1.3703,
+   "ev_per100": 3.93,
+   "petrol_per100": 11.2,
+   "diesel_per100": 8.63
+  },
+  {
+   "year": 2012,
+   "elec_eur_kwh": 0.1956,
+   "petrol_eur_l": 1.6218,
+   "diesel_eur_l": 1.4936,
+   "ev_per100": 4.11,
+   "petrol_per100": 12.16,
+   "diesel_per100": 9.41
+  },
+  {
+   "year": 2013,
+   "elec_eur_kwh": 0.2052,
+   "petrol_eur_l": 1.5641,
+   "diesel_eur_l": 1.4403,
+   "ev_per100": 4.31,
+   "petrol_per100": 11.73,
+   "diesel_per100": 9.07
+  },
+  {
+   "year": 2014,
+   "elec_eur_kwh": 0.2071,
+   "petrol_eur_l": 1.534,
+   "diesel_eur_l": 1.3985,
+   "ev_per100": 4.35,
+   "petrol_per100": 11.51,
+   "diesel_per100": 8.81
+  },
+  {
+   "year": 2015,
+   "elec_eur_kwh": 0.2086,
+   "petrol_eur_l": 1.3971,
+   "diesel_eur_l": 1.2355,
+   "ev_per100": 4.38,
+   "petrol_per100": 10.48,
+   "diesel_per100": 7.78
+  },
+  {
+   "year": 2016,
+   "elec_eur_kwh": 0.206,
+   "petrol_eur_l": 1.2908,
+   "diesel_eur_l": 1.1233,
+   "ev_per100": 4.33,
+   "petrol_per100": 9.68,
+   "diesel_per100": 7.08
+  },
+  {
+   "year": 2017,
+   "elec_eur_kwh": 0.2089,
+   "petrol_eur_l": 1.3507,
+   "diesel_eur_l": 1.2108,
+   "ev_per100": 4.39,
+   "petrol_per100": 10.13,
+   "diesel_per100": 7.63
+  },
+  {
+   "year": 2018,
+   "elec_eur_kwh": 0.2127,
+   "petrol_eur_l": 1.427,
+   "diesel_eur_l": 1.3345,
+   "ev_per100": 4.47,
+   "petrol_per100": 10.7,
+   "diesel_per100": 8.41
+  },
+  {
+   "year": 2019,
+   "elec_eur_kwh": 0.2168,
+   "petrol_eur_l": 1.4139,
+   "diesel_eur_l": 1.3336,
+   "ev_per100": 4.55,
+   "petrol_per100": 10.6,
+   "diesel_per100": 8.4
+  },
+  {
+   "year": 2020,
+   "elec_eur_kwh": 0.2146,
+   "petrol_eur_l": 1.2769,
+   "diesel_eur_l": 1.1561,
+   "ev_per100": 4.51,
+   "petrol_per100": 9.58,
+   "diesel_per100": 7.28
+  },
+  {
+   "year": 2021,
+   "elec_eur_kwh": 0.2309,
+   "petrol_eur_l": 1.5044,
+   "diesel_eur_l": 1.3591,
+   "ev_per100": 4.85,
+   "petrol_per100": 11.28,
+   "diesel_per100": 8.56
+  },
+  {
+   "year": 2022,
+   "elec_eur_kwh": 0.2629,
+   "petrol_eur_l": 1.8041,
+   "diesel_eur_l": 1.8212,
+   "ev_per100": 5.52,
+   "petrol_per100": 13.53,
+   "diesel_per100": 11.47
+  },
+  {
+   "year": 2023,
+   "elec_eur_kwh": 0.2867,
+   "petrol_eur_l": 1.7417,
+   "diesel_eur_l": 1.6717,
+   "ev_per100": 6.02,
+   "petrol_per100": 13.06,
+   "diesel_per100": 10.53
+  },
+  {
+   "year": 2024,
+   "elec_eur_kwh": 0.2902,
+   "petrol_eur_l": 1.7006,
+   "diesel_eur_l": 1.6043,
+   "ev_per100": 6.09,
+   "petrol_per100": 12.75,
+   "diesel_per100": 10.11
+  },
+  {
+   "year": 2025,
+   "elec_eur_kwh": 0.2888,
+   "petrol_eur_l": 1.6319,
+   "diesel_eur_l": 1.5518,
+   "ev_per100": 6.06,
+   "petrol_per100": 12.24,
+   "diesel_per100": 9.78
+  }
+ ]
+}
